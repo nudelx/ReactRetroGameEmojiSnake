@@ -68,14 +68,16 @@ class SnakeGame extends Component {
   render() {
     const { gameRunning } = this.state
     return (
-      <div >
-
-          {gameRunning ? (
-            this.renderGame()
-          ) : (
-            <Board {...this.state}> <StartButton onClick={this.startTheGame} /> </Board>
-          )}
-          <div>{'Use: J,K,L,I to navigate'}</div>
+      <div>
+        {gameRunning ? (
+          this.renderGame()
+        ) : (
+          <Board {...this.state}>
+            {' '}
+            <StartButton onClick={this.startTheGame} />{' '}
+          </Board>
+        )}
+        <div>{'Use: J,K,L,I to navigate'}</div>
       </div>
     )
   }

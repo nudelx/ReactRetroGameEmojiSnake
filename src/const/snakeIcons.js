@@ -29,4 +29,4 @@ export const ICONS = [
   '🍣'
 ]
 
-export const snakeHead = ['😀','🙂','😃', '🙂']
+export const snakeHead = ['😀', '🙂', '😃', '🙂']
