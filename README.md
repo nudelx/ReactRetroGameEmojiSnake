@@ -7,4 +7,4 @@
 
 ## Demo
 
-![demo](https://github.com/nudelx/ReactRetroGameEmojiSnake/raw/master/readmeAssets/active-width-plugin.gif)
+![demo](https://github.com/nudelx/ReactRetroGameEmojiSnake/raw/master/readmeAssets/giphy.gif)
