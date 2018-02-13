@@ -17,13 +17,13 @@ class Snake extends Component {
       KeyL: { axis: "x", sign: 1 },
       KeyK: { axis: "y", sign: 1 }
     }
-  };
+  }
 
   activateAutoRun() {
     const timer = setInterval(
       () => this.updatePosition({ code: this.state.pressCode }),
       this.state.speed
-    );
+    )
     this.setState({ timer })
   }
 
@@ -59,16 +59,16 @@ class Snake extends Component {
       },
       () => {
         if (foodY === this.state.y && foodX === this.state.x) {
-          toggleFood();
-          this.addChild();
+          toggleFood()
+          this.addChild()
         }
         timer === null && this.activateAutoRun()
       }
-    );
-  };
+    )
+  }
 
   componentDidMount() {
-    const body = document.querySelector("body");
+    const body = document.querySelector("body")
     body.addEventListener("keypress", this.updatePosition)
     this.runHeadChange()
   }
@@ -81,7 +81,7 @@ class Snake extends Component {
           snakeHeadindex: (this.state.snakeHeadindex + 1) % snakeHead.length
         }),
       headIconChangeSpeed
-    );
+    )
   }
 
   render() {
@@ -103,7 +103,7 @@ class Snake extends Component {
           </div>
         ))}
       </div>
-    );
+    )
   }
 }
 
