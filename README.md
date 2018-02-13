@@ -6,7 +6,7 @@
 
 ### No flash, no canvas, pure HTML + CSS + JavaScritp React Lib
 
->Play the classic retro game! Guide the emoji snake towards the food but avoid your ever-growing tail 😀
+#### Play the classic retro game! Guide the emoji snake towards the food but avoid your ever-growing tail 😀
 
 ## Installation
   `clone and run yarn && yarn start`
