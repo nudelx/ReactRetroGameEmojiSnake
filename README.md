@@ -5,6 +5,6 @@
 ### Made with pure html + css + JavaScritp React Lib
 
 
-## Previreew
+## Demo
 
 ![demo](https://github.com/nudelx/ReactRetroGameEmojiSnake/raw/master/readmeAssets/active-width-plugin.gif)
