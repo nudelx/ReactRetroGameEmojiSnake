@@ -112,3 +112,16 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
   border-radius: 4px;
   cursor: pointer;
 }
+
+.score-display {
+  padding: 10px 5px;
+  text-align: left;
+  font-family: monospace;
+  color: #fff;
+  font-size: 28px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  min-width: 200px;
+  min-height: 20px;
+}

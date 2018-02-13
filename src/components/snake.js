@@ -20,11 +20,18 @@ class Snake extends Component {
   }
 
   activateAutoRun() {
+    clearInterval(this.state.timer)
     const timer = setInterval(
       () => this.updatePosition({ code: this.state.pressCode }),
       this.state.speed
     )
     this.setState({ timer })
+  }
+
+  updateAutoRun() {
+    if (this.state.numOfChildren % 5 === 0 && this.state.speed > 100) {
+      this.setState({speed: this.state.speed * 0.9}, () => this.activateAutoRun())
+    }
   }
 
   magicMove(axis, axisValue) {
@@ -44,9 +51,11 @@ class Snake extends Component {
     this.setState({ numOfChildren: this.state.numOfChildren + 1 })
   }
 
+
+
   updatePosition = e => {
     const { calcStep, path, numOfChildren, timer } = this.state
-    const { step, foodY, foodX, toggleFood } = this.props
+    const { step, foodY, foodX, toggleFood, setScore } = this.props
     if (!calcStep[e.code]) return
     const { [e.code]: { axis, sign } } = calcStep
     const { [axis]: axisValue } = this.state
@@ -60,7 +69,9 @@ class Snake extends Component {
       () => {
         if (foodY === this.state.y && foodX === this.state.x) {
           toggleFood()
+          setScore(1)
           this.addChild()
+          this.updateAutoRun()
         }
         timer === null && this.activateAutoRun()
       }

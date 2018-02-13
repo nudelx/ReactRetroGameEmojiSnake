@@ -3,6 +3,7 @@ import Board from '../components/board'
 import Snake from '../components/snake'
 import Food from '../components/food'
 import StartButton from '../components/startButton'
+import ScoreDisplay from '../components/scoreDisplay'
 
 class SnakeGame extends Component {
   state = {
@@ -12,7 +13,8 @@ class SnakeGame extends Component {
     foodX: 0,
     foodY: 0,
     foodVisible: false,
-    gameRunning: false
+    gameRunning: false,
+    score: 0
   }
   componentWillMount() {
     this.setBackgroudDimensions()
@@ -42,6 +44,8 @@ class SnakeGame extends Component {
 
   startTheGame = () => this.setState({ gameRunning: true })
 
+  setScore = (value) =>  this.setState({ score: this.state.score + value })
+
   calcFoodPosition() {
     let foodX = this.randomPosition(this.state.width, 0)
     let foodY = this.randomPosition(this.state.height, 0)
@@ -51,14 +55,16 @@ class SnakeGame extends Component {
   }
 
   renderGame() {
-    const { foodX, foodY, foodVisible } = this.state
+    const { foodX, foodY, foodVisible, score } = this.state
     return (
       <Board {...this.state}>
+        <ScoreDisplay score={score}/>
         <Snake
           {...this.state}
           foodX={foodX}
           foodY={foodY}
           toggleFood={this.toggleFood}
+          setScore={this.setScore}
         />
         {foodVisible && <Food foodX={foodX} foodY={foodY} />}
       </Board>
