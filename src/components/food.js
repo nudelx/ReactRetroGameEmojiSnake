@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { ICONS } from '../const/snakeIcons'
 
 const Food = ({ foodX, foodY }) => {

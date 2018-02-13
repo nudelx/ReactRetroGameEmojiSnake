@@ -77,7 +77,7 @@ class SnakeGame extends Component {
             <StartButton onClick={this.startTheGame} />{' '}
           </Board>
         )}
-        <div>{'Use: J,K,L,I to navigate'}</div>
+        <div className='tuts'>{'Use: J,K,L,I to navigate'}</div>
       </div>
     )
   }
