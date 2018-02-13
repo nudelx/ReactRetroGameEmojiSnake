@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { snakeHead, snakeBody } from "../const/snakeIcons";
+import React, { Component } from "react"
+import { snakeHead, snakeBody } from "../const/snakeIcons"
 class Snake extends Component {
   state = {
     x: 32,
@@ -24,33 +24,33 @@ class Snake extends Component {
       () => this.updatePosition({ code: this.state.pressCode }),
       this.state.speed
     );
-    this.setState({ timer });
+    this.setState({ timer })
   }
 
   magicMove(axis, axisValue) {
-    const { height, width, step } = this.props;
+    const { height, width, step } = this.props
     if (axis === "y") {
       return axisValue < 0
         ? height - step
-        : axisValue + step > height ? 0 : axisValue;
+        : axisValue + step > height ? 0 : axisValue
     } else {
       return axisValue < 0
         ? width - step
-        : axisValue + step > width ? 0 : axisValue;
+        : axisValue + step > width ? 0 : axisValue
     }
   }
 
   addChild() {
-    this.setState({ numOfChildren: this.state.numOfChildren + 1 });
+    this.setState({ numOfChildren: this.state.numOfChildren + 1 })
   }
 
   updatePosition = e => {
-    const { calcStep, path, numOfChildren, timer } = this.state;
-    const { step, foodY, foodX, toggleFood } = this.props;
-    if (!calcStep[e.code]) return;
-    const { [e.code]: { axis, sign } } = calcStep;
-    const { [axis]: axisValue } = this.state;
-    path.push({ x: this.state.x, y: this.state.y });
+    const { calcStep, path, numOfChildren, timer } = this.state
+    const { step, foodY, foodX, toggleFood } = this.props
+    if (!calcStep[e.code]) return
+    const { [e.code]: { axis, sign } } = calcStep
+    const { [axis]: axisValue } = this.state
+    path.push({ x: this.state.x, y: this.state.y })
     this.setState(
       {
         [axis]: this.magicMove(axis, axisValue + step * sign),
@@ -62,15 +62,15 @@ class Snake extends Component {
           toggleFood();
           this.addChild();
         }
-        timer === null && this.activateAutoRun();
+        timer === null && this.activateAutoRun()
       }
     );
   };
 
   componentDidMount() {
     const body = document.querySelector("body");
-    body.addEventListener("keypress", this.updatePosition);
-    this.runHeadChange();
+    body.addEventListener("keypress", this.updatePosition)
+    this.runHeadChange()
   }
 
   runHeadChange() {
@@ -107,4 +107,4 @@ class Snake extends Component {
   }
 }
 
-export default Snake;
+export default Snake
