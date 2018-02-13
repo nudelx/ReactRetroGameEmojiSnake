@@ -63,7 +63,7 @@ class SnakeGame extends Component {
   }
 
   renderGame() {
-    const { foodX, foodY, foodVisible, score, gameFail } = this.state
+    const { foodX, foodY, foodVisible, score } = this.state
     return (
       <Board {...this.state}>
         <ScoreDisplay score={score} />
