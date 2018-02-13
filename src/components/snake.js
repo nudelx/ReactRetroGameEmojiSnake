@@ -4,8 +4,6 @@ class Snake extends Component {
   state = {
     x: 32,
     y: 32,
-    last_x: 32,
-    last_y: 32,
     snakeHeadindex: 0,
     numOfChildren: 0,
     path: [],
@@ -44,8 +42,6 @@ class Snake extends Component {
     this.setState(
       {
         [axis]: this.magicMove(axis, axisValue + step * sign),
-        'last_x': this.state.x,
-        'last_y': this.state.y,
          path: numOfChildren === 0 ? [] : path.slice(-numOfChildren)
       },
       () => {
@@ -74,7 +70,6 @@ class Snake extends Component {
   }
 
   render() {
-    const  { numOfChildren } = this.props
     return (
       <div className="snake">
         <div
