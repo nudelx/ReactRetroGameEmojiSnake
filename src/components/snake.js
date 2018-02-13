@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { snakeHead } from '../const/snakeIcons'
+import { snakeHead, snakeBody } from '../const/snakeIcons'
 class Snake extends Component {
   state = {
     x: 32,
@@ -83,7 +83,7 @@ class Snake extends Component {
             key={`${item.y}_${item.x}_${index}`}
             style={{ top: item.y, left: item.x }}
             className="snake-body">
-            {'🌕'}
+            {snakeBody}
           </div>
         ))}
       </div>

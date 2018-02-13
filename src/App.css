@@ -58,7 +58,7 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
   background-color: #19181a;
   background-image: url(./img/circuit-board.svg);
   position: relative;
-  margin: 10px auto;
+  margin: 20px auto;
   border-left: 10px solid #ccc;
   border-bottom: 10px solid #b3b3b3;
   border-top: 10px solid #ccc;
