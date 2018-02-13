@@ -1,5 +1,8 @@
 import React, { Component } from "react"
 import { snakeHead, snakeBody } from "../const/snakeIcons"
+import SnakeHead from './snakeHead'
+import SnakeBody from './snakeBody'
+
 class Snake extends Component {
   state = {
     x: 32,
@@ -51,8 +54,6 @@ class Snake extends Component {
     this.setState({ numOfChildren: this.state.numOfChildren + 1 })
   }
 
-
-
   updatePosition = e => {
     const { calcStep, path, numOfChildren, timer } = this.state
     const { step, foodY, foodX, toggleFood, setScore } = this.props
@@ -96,22 +97,18 @@ class Snake extends Component {
   }
 
   render() {
+    const { x, y, snakeHeadindex } = this.state
     return (
       <div className="snake">
-        <div
-          className="snake-head"
-          style={{ top: this.state.y, left: this.state.x }}
-        >
-          {snakeHead[this.state.snakeHeadindex]}
-        </div>
+        <SnakeHead x={x} y={y} snakeHeadindex={snakeHeadindex} />
+
         {this.state.path.map((item, index) => (
-          <div
+          <SnakeBody
+            {...item}
             key={`${item.y}_${item.x}_${index}`}
-            style={{ top: item.y, left: item.x }}
-            className="snake-body"
           >
             {snakeBody}
-          </div>
+          </SnakeBody>
         ))}
       </div>
     )
