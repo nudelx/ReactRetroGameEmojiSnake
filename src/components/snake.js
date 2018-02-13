@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { snakeHead, snakeBody } from '../const/snakeIcons'
+import React, { Component } from "react";
+import { snakeHead, snakeBody } from "../const/snakeIcons";
 class Snake extends Component {
   state = {
     x: 32,
@@ -7,38 +7,50 @@ class Snake extends Component {
     snakeHeadindex: 0,
     numOfChildren: 0,
     path: [],
+    pressCode: null,
+    speed: 500,
+    headIconChangeSpeed: 300,
+    timer: null,
     calcStep: {
-      KeyI: { axis: 'y', sign: -1 },
-      KeyJ: { axis: 'x', sign: -1 },
-      KeyL: { axis: 'x', sign: 1 },
-      KeyK: { axis: 'y', sign: 1 }
+      KeyI: { axis: "y", sign: -1 },
+      KeyJ: { axis: "x", sign: -1 },
+      KeyL: { axis: "x", sign: 1 },
+      KeyK: { axis: "y", sign: 1 }
     }
+  };
+
+  activateAutoRun() {
+    const timer = setInterval(
+      () => this.updatePosition({ code: this.state.pressCode }),
+      this.state.speed
+    );
+    this.setState({ timer });
   }
 
   magicMove(axis, axisValue) {
-    const { height, width, step } = this.props
-    if (axis === 'y') {
+    const { height, width, step } = this.props;
+    if (axis === "y") {
       return axisValue < 0
         ? height - step
-        : axisValue + step > height ? 0 : axisValue
+        : axisValue + step > height ? 0 : axisValue;
     } else {
       return axisValue < 0
         ? width - step
-        : axisValue + step > width ? 0 : axisValue
+        : axisValue + step > width ? 0 : axisValue;
     }
   }
 
   addChild() {
-    this.setState({ numOfChildren: this.state.numOfChildren + 1 })
+    this.setState({ numOfChildren: this.state.numOfChildren + 1 });
   }
 
   updatePosition = e => {
-    const { calcStep, path, numOfChildren } = this.state
-    const { step, foodY, foodX, toggleFood } = this.props
-    if (!calcStep[e.code]) return
-    const { [e.code]: { axis, sign } } = calcStep
-    const { [axis]: axisValue } = this.state
-    path.push({ x: this.state.x, y: this.state.y })
+    const { calcStep, path, numOfChildren, timer } = this.state;
+    const { step, foodY, foodX, toggleFood } = this.props;
+    if (!calcStep[e.code]) return;
+    const { [e.code]: { axis, sign } } = calcStep;
+    const { [axis]: axisValue } = this.state;
+    path.push({ x: this.state.x, y: this.state.y });
     this.setState(
       {
         [axis]: this.magicMove(axis, axisValue + step * sign),
@@ -47,27 +59,29 @@ class Snake extends Component {
       },
       () => {
         if (foodY === this.state.y && foodX === this.state.x) {
-          toggleFood()
-          this.addChild()
+          toggleFood();
+          this.addChild();
         }
+        timer === null && this.activateAutoRun();
       }
-    )
-  }
+    );
+  };
 
   componentDidMount() {
-    const body = document.querySelector('body')
-    body.addEventListener('keypress', this.updatePosition)
-    this.runHeadChange()
+    const body = document.querySelector("body");
+    body.addEventListener("keypress", this.updatePosition);
+    this.runHeadChange();
   }
 
   runHeadChange() {
+    const { headIconChangeSpeed } = this.state
     setInterval(
       () =>
         this.setState({
           snakeHeadindex: (this.state.snakeHeadindex + 1) % snakeHead.length
         }),
-      300
-    )
+      headIconChangeSpeed
+    );
   }
 
   render() {
@@ -75,20 +89,22 @@ class Snake extends Component {
       <div className="snake">
         <div
           className="snake-head"
-          style={{ top: this.state.y, left: this.state.x }}>
+          style={{ top: this.state.y, left: this.state.x }}
+        >
           {snakeHead[this.state.snakeHeadindex]}
         </div>
         {this.state.path.map((item, index) => (
           <div
             key={`${item.y}_${item.x}_${index}`}
             style={{ top: item.y, left: item.x }}
-            className="snake-body">
+            className="snake-body"
+          >
             {snakeBody}
           </div>
         ))}
       </div>
-    )
+    );
   }
 }
 
-export default Snake
+export default Snake;
