@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { snakeHead, snakeBody } from "../const/snakeIcons"
-import SnakeHead from './snakeHead'
-import SnakeBody from './snakeBody'
+import SnakeHead from "./snakeHead"
+import SnakeBody from "./snakeBody"
 
 class Snake extends Component {
   state = {
@@ -12,6 +12,7 @@ class Snake extends Component {
     path: [],
     pressCode: null,
     speed: 500,
+    scoreValue: 5,
     headIconChangeSpeed: 300,
     timer: null,
     calcStep: {
@@ -31,10 +32,24 @@ class Snake extends Component {
     this.setState({ timer })
   }
 
-  updateAutoRun() {
+  updateSpeed() {
     if (this.state.numOfChildren % 5 === 0 && this.state.speed > 100) {
-      this.setState({speed: this.state.speed * 0.9}, () => this.activateAutoRun())
+      this.setState({ speed: this.state.speed * 0.9 }, () =>
+        this.activateAutoRun()
+      )
     }
+  }
+
+  checkForFail() {
+    const { path, x, y } = this.state
+    // need to improve performance here
+    path.filter(item => item.x === x && item.y === y).length &&
+      this.stopTheGame()
+  }
+
+  stopTheGame() {
+    clearInterval(this.state.timer)
+    this.props.toggleGameFail()
   }
 
   magicMove(axis, axisValue) {
@@ -70,19 +85,14 @@ class Snake extends Component {
       () => {
         if (foodY === this.state.y && foodX === this.state.x) {
           toggleFood()
-          setScore(1)
+          setScore(this.state.scoreValue)
           this.addChild()
-          this.updateAutoRun()
+          this.updateSpeed()
         }
         timer === null && this.activateAutoRun()
+        this.checkForFail()
       }
     )
-  }
-
-  componentDidMount() {
-    const body = document.querySelector("body")
-    body.addEventListener("keypress", this.updatePosition)
-    this.runHeadChange()
   }
 
   runHeadChange() {
@@ -96,17 +106,19 @@ class Snake extends Component {
     )
   }
 
+  componentDidMount() {
+    const body = document.querySelector("body")
+    body.addEventListener("keypress", this.updatePosition)
+    this.runHeadChange()
+  }
+
   render() {
     const { x, y, snakeHeadindex } = this.state
     return (
       <div className="snake">
         <SnakeHead x={x} y={y} snakeHeadindex={snakeHeadindex} />
-
         {this.state.path.map((item, index) => (
-          <SnakeBody
-            {...item}
-            key={`${item.y}_${item.x}_${index}`}
-          >
+          <SnakeBody {...item} key={`${item.y}_${item.x}_${index}`}>
             {snakeBody}
           </SnakeBody>
         ))}

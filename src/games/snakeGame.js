@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-import Board from '../components/board'
-import Snake from '../components/snake'
-import Food from '../components/food'
-import StartButton from '../components/startButton'
-import ScoreDisplay from '../components/scoreDisplay'
+import React, { Component } from "react"
+import Board from "../components/board"
+import Snake from "../components/snake"
+import Food from "../components/food"
+import StartButton from "../components/startButton"
+import ScoreDisplay from "../components/scoreDisplay"
+import GameOver from "../components/gameOver"
 
 class SnakeGame extends Component {
   state = {
@@ -14,6 +15,7 @@ class SnakeGame extends Component {
     foodY: 0,
     foodVisible: false,
     gameRunning: false,
+    gameFail: false,
     score: 0
   }
   componentWillMount() {
@@ -38,13 +40,19 @@ class SnakeGame extends Component {
       () => !this.state.foodVisible && this.calcFoodPosition()
     )
 
+  toggleGameFail = () => this.setState({ gameFail: !this.state.gameFail })
+
   randomPosition(max, min) {
     return Math.floor(Math.random() * max) + min
   }
 
-  startTheGame = () => this.setState({ gameRunning: true })
+  setGameRunningOn = () => this.setState({ gameRunning: true })
 
-  setScore = (value) =>  this.setState({ score: this.state.score + value })
+  setGameRunningOff = () => this.setState({ gameRunning: false })
+
+  startTheGame = () => this.setState({ score:0, gameRunning: true, gameFail: false })
+
+  setScore = value => this.setState({ score: this.state.score + value })
 
   calcFoodPosition() {
     let foodX = this.randomPosition(this.state.width, 0)
@@ -55,16 +63,17 @@ class SnakeGame extends Component {
   }
 
   renderGame() {
-    const { foodX, foodY, foodVisible, score } = this.state
+    const { foodX, foodY, foodVisible, score, gameFail } = this.state
     return (
       <Board {...this.state}>
-        <ScoreDisplay score={score}/>
+        <ScoreDisplay score={score} />
         <Snake
           {...this.state}
           foodX={foodX}
           foodY={foodY}
           toggleFood={this.toggleFood}
           setScore={this.setScore}
+          toggleGameFail={this.toggleGameFail}
         />
         {foodVisible && <Food foodX={foodX} foodY={foodY} />}
       </Board>
@@ -72,18 +81,21 @@ class SnakeGame extends Component {
   }
 
   render() {
-    const { gameRunning } = this.state
+    const { gameRunning, gameFail, score } = this.state
     return (
       <div>
-        {gameRunning ? (
+        {gameRunning && !gameFail ? (
           this.renderGame()
         ) : (
           <Board {...this.state}>
-            {' '}
-            <StartButton onClick={this.startTheGame} />{' '}
+            {gameFail ? (
+              <GameOver score={score} onClick={this.startTheGame} />
+            ) : (
+              <StartButton onClick={this.startTheGame} />
+            )}
           </Board>
         )}
-        <div className='tuts'>{'Use: J,K,L,I to navigate'}</div>
+        <div className="tuts">{"Use: J,K,L,I to navigate"}</div>
       </div>
     )
   }
