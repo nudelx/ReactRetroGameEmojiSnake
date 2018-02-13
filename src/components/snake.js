@@ -33,7 +33,7 @@ class Snake extends Component {
   }
 
   updatePosition = e => {
-    const { calcStep, path, numOfChildren} = this.state
+    const { calcStep, path, numOfChildren } = this.state
     const { step, foodY, foodX, toggleFood } = this.props
     if (!calcStep[e.code]) return
     const { [e.code]: { axis, sign } } = calcStep
@@ -42,7 +42,8 @@ class Snake extends Component {
     this.setState(
       {
         [axis]: this.magicMove(axis, axisValue + step * sign),
-         path: numOfChildren === 0 ? [] : path.slice(-numOfChildren)
+        path: numOfChildren === 0 ? [] : path.slice(-numOfChildren),
+        pressCode: e.code
       },
       () => {
         if (foodY === this.state.y && foodX === this.state.x) {
@@ -77,10 +78,14 @@ class Snake extends Component {
           style={{ top: this.state.y, left: this.state.x }}>
           {snakeHead[this.state.snakeHeadindex]}
         </div>
-        {
-          this.state.path
-          .map((item, index) => <div key={`${item.y}_${item.x}_${index}`} style={{ top: item.y, left: item.x }} className='snake-body'>{'🌕'}</div>)
-        }
+        {this.state.path.map((item, index) => (
+          <div
+            key={`${item.y}_${item.x}_${index}`}
+            style={{ top: item.y, left: item.x }}
+            className="snake-body">
+            {'🌕'}
+          </div>
+        ))}
       </div>
     )
   }

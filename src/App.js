@@ -10,7 +10,6 @@ class App extends Component {
       <div className="App">
         <ReactHeader />
         <SnakeGame />
-
         {/* and more games here  */}
       </div>
     )
