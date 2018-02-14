@@ -8,6 +8,8 @@
 
 #### Play the classic retro game! Guide the emoji snake towards the food but avoid your ever-growing tail 😀
 
+## To play => https://github.com/nudelx/ReactRetroGameEmojiSnake  
+
 ## Installation
   `clone and run yarn && yarn start`
 
