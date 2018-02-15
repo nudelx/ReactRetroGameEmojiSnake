@@ -14,5 +14,11 @@
   `clone and run yarn && yarn start`
 
 ## Demo
-
 ![demo](https://github.com/nudelx/ReactRetroGameEmojiSnake/raw/master/readmeAssets/snakegif.gif)
+
+## Video
+
+[![Video Trailer](https://img.youtube.com/vi/oYlPvPsBLj0/0.jpg)](https://www.youtube.com/watch?v=oYlPvPsBLj0)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oYlPvPsBLj0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
