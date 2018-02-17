@@ -44,7 +44,7 @@ class SnakeGame extends Component {
 
   toggleGameFail = () => this.setState({ gameFail: !this.state.gameFail })
 
-  togglePlaySound = () => this.setState({ playSound: !this.state.playSound })
+  setPlaySound = (value) => this.setState({ playSound: value })
 
   randomPosition(max, min) {
     return Math.floor(Math.random() * max) + min
@@ -56,7 +56,9 @@ class SnakeGame extends Component {
 
   startTheGame = () => this.setState({ score:0, gameRunning: true, gameFail: false })
 
-  setScore = value => this.setState({ score: this.state.score + value }, () => this.togglePlaySound())
+  setScore = value => this.setState({ score: this.state.score + value })
+
+  closePlayer = () => this.setState({ playSound: false })
 
   calcFoodPosition() {
     let foodX = this.randomPosition(this.state.width, 0)
@@ -77,10 +79,11 @@ class SnakeGame extends Component {
           foodY={foodY}
           toggleFood={this.toggleFood}
           setScore={this.setScore}
+          setPlaySound={this.setPlaySound}
           toggleGameFail={this.toggleGameFail}
         />
         {foodVisible && <Food foodX={foodX} foodY={foodY} />}
-        { playSound && <SoundPlayer />}
+        { playSound && <SoundPlayer closePlayer={this.closePlayer}/> }
       </Board>
     )
   }
