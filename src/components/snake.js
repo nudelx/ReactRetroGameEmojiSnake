@@ -15,10 +15,16 @@ class Snake extends Component {
     scoreValue: 5,
     headIconChangeSpeed: 300,
     timer: null,
+    // calcStep: {
+    //   KeyI: { axis: "y", sign: -1 },
+    //   KeyJ: { axis: "x", sign: -1 },
+    //   KeyL: { axis: "x", sign: 1 },
+    //   KeyK: { axis: "y", sign: 1 }
+    // }
     calcStep: {
-      KeyI: { axis: "y", sign: -1 },
-      KeyJ: { axis: "x", sign: -1 },
-      KeyL: { axis: "x", sign: 1 },
+      KeyG: { axis: "y", sign: -1 },
+      KeyS: { axis: "x", sign: -1 },
+      Quote: { axis: "x", sign: 1 },
       KeyK: { axis: "y", sign: 1 }
     }
   }
@@ -74,6 +80,7 @@ class Snake extends Component {
     const { step, foodY, foodX, toggleFood, setScore, setPlaySound } = this.props
     if (!calcStep[e.code]) return
     const { [e.code]: { axis, sign } } = calcStep
+    if (pressCode && calcStep[pressCode].axis === axis &&  sign !== calcStep[pressCode].sign) return
     const { [axis]: axisValue } = this.state
     path.push({ x: this.state.x, y: this.state.y })
     this.setState(
