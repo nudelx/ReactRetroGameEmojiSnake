@@ -71,7 +71,7 @@ class Snake extends Component {
 
   updatePosition = e => {
     const { calcStep, path, numOfChildren, timer } = this.state
-    const { step, foodY, foodX, toggleFood, setScore } = this.props
+    const { step, foodY, foodX, toggleFood, setScore, setPlaySound } = this.props
     if (!calcStep[e.code]) return
     const { [e.code]: { axis, sign } } = calcStep
     const { [axis]: axisValue } = this.state
@@ -88,6 +88,7 @@ class Snake extends Component {
           setScore(this.state.scoreValue)
           this.addChild()
           this.updateSpeed()
+          setPlaySound(true)
         }
         timer === null && this.activateAutoRun()
         this.checkForFail()

@@ -5,6 +5,7 @@ import Food from "../components/food"
 import StartButton from "../components/startButton"
 import ScoreDisplay from "../components/scoreDisplay"
 import GameOver from "../components/gameOver"
+import SoundPlayer from '../components/soundPlayer'
 
 class SnakeGame extends Component {
   state = {
@@ -16,6 +17,7 @@ class SnakeGame extends Component {
     foodVisible: false,
     gameRunning: false,
     gameFail: false,
+    playSound: false,
     score: 0
   }
   componentWillMount() {
@@ -42,6 +44,8 @@ class SnakeGame extends Component {
 
   toggleGameFail = () => this.setState({ gameFail: !this.state.gameFail })
 
+  setPlaySound = (value) => this.setState({ playSound: value })
+
   randomPosition(max, min) {
     return Math.floor(Math.random() * max) + min
   }
@@ -54,6 +58,8 @@ class SnakeGame extends Component {
 
   setScore = value => this.setState({ score: this.state.score + value })
 
+  closePlayer = () => this.setState({ playSound: false })
+
   calcFoodPosition() {
     let foodX = this.randomPosition(this.state.width, 0)
     let foodY = this.randomPosition(this.state.height, 0)
@@ -63,7 +69,7 @@ class SnakeGame extends Component {
   }
 
   renderGame() {
-    const { foodX, foodY, foodVisible, score } = this.state
+    const { foodX, foodY, foodVisible, score, playSound } = this.state
     return (
       <Board {...this.state}>
         <ScoreDisplay score={score} />
@@ -73,9 +79,11 @@ class SnakeGame extends Component {
           foodY={foodY}
           toggleFood={this.toggleFood}
           setScore={this.setScore}
+          setPlaySound={this.setPlaySound}
           toggleGameFail={this.toggleGameFail}
         />
         {foodVisible && <Food foodX={foodX} foodY={foodY} />}
+        { playSound && <SoundPlayer closePlayer={this.closePlayer}/> }
       </Board>
     )
   }
