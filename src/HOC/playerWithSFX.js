@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
 import * as SFX from "../sounds/snap.mp3"
-import SoundPlayer from '../components/soundPlayer'
 import {getDisplayName} from './hocHelper'
 
 const withSFX = Sound => {
