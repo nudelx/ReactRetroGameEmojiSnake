@@ -5,12 +5,13 @@ import Food from "../components/food"
 import StartButton from "../components/startButton"
 import ScoreDisplay from "../components/scoreDisplay"
 import GameOver from "../components/gameOver"
-import SoundPlayer from '../components/soundPlayer'
-import withSFX from '../HOC/playerWithSFX'
-import withBGM from '../HOC/playerWithBGM'
+import SoundPlayer from "../components/soundPlayer"
+import withSFX from "../HOC/playerWithSFX"
+import withBGM from "../HOC/playerWithBGM"
+import SoundBGMControl from "../components/bgmControl"
 
 const SoundPlayerSFX = withSFX(SoundPlayer)
-const SoundPlayerBGM= withBGM(SoundPlayer)
+const SoundPlayerBGM = withBGM(SoundPlayer)
 
 class SnakeGame extends Component {
   state = {
@@ -23,7 +24,8 @@ class SnakeGame extends Component {
     gameRunning: false,
     gameFail: false,
     playSound: false,
-    score: 0
+    score: 0,
+    playBGM: true
   }
   componentWillMount() {
     this.setBackgroudDimensions()
@@ -49,7 +51,7 @@ class SnakeGame extends Component {
 
   toggleGameFail = () => this.setState({ gameFail: !this.state.gameFail })
 
-  setPlaySound = (value) => this.setState({ playSound: value })
+  setPlaySound = value => this.setState({ playSound: value })
 
   randomPosition(max, min) {
     return Math.floor(Math.random() * max) + min
@@ -59,11 +61,14 @@ class SnakeGame extends Component {
 
   setGameRunningOff = () => this.setState({ gameRunning: false })
 
-  startTheGame = () => this.setState({ score:0, gameRunning: true, gameFail: false })
+  startTheGame = () =>
+    this.setState({ score: 0, gameRunning: true, gameFail: false })
 
   setScore = value => this.setState({ score: this.state.score + value })
 
   closePlayer = () => this.setState({ playSound: false })
+
+  togglePlayBGM = () => this.setState({ playBGM: !this.state.playBGM })
 
   calcFoodPosition() {
     let foodX = this.randomPosition(this.state.width, 0)
@@ -78,6 +83,7 @@ class SnakeGame extends Component {
     return (
       <Board {...this.state}>
         <ScoreDisplay score={score} />
+
         <Snake
           {...this.state}
           foodX={foodX}
@@ -88,13 +94,14 @@ class SnakeGame extends Component {
           toggleGameFail={this.toggleGameFail}
         />
         {foodVisible && <Food foodX={foodX} foodY={foodY} />}
-        { playSound && <SoundPlayerSFX closePlayer={this.closePlayer}/> }
+        {playSound && <SoundPlayerSFX closePlayer={this.closePlayer} />}
       </Board>
     )
   }
 
   render() {
-    const { gameRunning, gameFail, score } = this.state
+    const { gameRunning, gameFail, score, playBGM } = this.state
+    console.log("playBGM =>", playBGM)
     return (
       <div>
         {gameRunning && !gameFail ? (
@@ -109,7 +116,13 @@ class SnakeGame extends Component {
           </Board>
         )}
         <div className="tuts">{"Use: J,K,L,I to navigate"}</div>
-        <SoundPlayerBGM />
+        {playBGM && <SoundPlayerBGM />}
+        {
+          <SoundBGMControl
+            playBGM={playBGM}
+            togglePlayBGM={this.togglePlayBGM}
+          />
+        }
       </div>
     )
   }
