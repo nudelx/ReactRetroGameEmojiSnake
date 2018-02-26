@@ -1,11 +1,11 @@
 import React from "react"
-import * as SFX from "../sounds/snap.mp3"
 
-const SoundPlayer = ({closePlayer}) => {
+
+const SoundPlayer = ({ closePlayer, sound, autoPlay, loop}) => {
   return (
     <div>
-      <audio onEnded={closePlayer} autoPlay>
-        <source src={SFX} type="audio/mpeg" />
+      <audio onEnded={closePlayer} autoPlay={autoPlay} loop={loop}>
+        <source src={sound} type="audio/mpeg" />
       </audio>
     </div>
   )
