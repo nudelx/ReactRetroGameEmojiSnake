@@ -101,7 +101,6 @@ class SnakeGame extends Component {
 
   render() {
     const { gameRunning, gameFail, score, playBGM } = this.state
-    console.log("playBGM =>", playBGM)
     return (
       <div>
         {gameRunning && !gameFail ? (
