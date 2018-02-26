@@ -4,8 +4,8 @@ import SoundPlayer from "../components/soundPlayer"
 import { getDisplayName } from "./hocHelper"
 
 const withBGM = Sound => {
-  const withBGMFunction = () => (
-    <Sound {...this.props} sound={BGM} autoPlay loop />
+  const withBGMFunction = (props) => (
+    <Sound {...props} sound={BGM} autoPlay loop />
   )
   withBGMFunction.displayName = `WithBGM(${getDisplayName(Sound)})`
   return withBGMFunction
