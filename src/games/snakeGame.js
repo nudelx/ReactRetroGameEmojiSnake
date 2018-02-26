@@ -6,6 +6,11 @@ import StartButton from "../components/startButton"
 import ScoreDisplay from "../components/scoreDisplay"
 import GameOver from "../components/gameOver"
 import SoundPlayer from '../components/soundPlayer'
+import withSFX from '../HOC/playerWithSFX'
+import withBGM from '../HOC/playerWithBGM'
+
+const SoundPlayerSFX = withSFX(SoundPlayer)
+const SoundPlayerBGM= withBGM(SoundPlayer)
 
 class SnakeGame extends Component {
   state = {
@@ -83,7 +88,7 @@ class SnakeGame extends Component {
           toggleGameFail={this.toggleGameFail}
         />
         {foodVisible && <Food foodX={foodX} foodY={foodY} />}
-        { playSound && <SoundPlayer closePlayer={this.closePlayer}/> }
+        { playSound && <SoundPlayerSFX closePlayer={this.closePlayer}/> }
       </Board>
     )
   }
@@ -104,6 +109,7 @@ class SnakeGame extends Component {
           </Board>
         )}
         <div className="tuts">{"Use: J,K,L,I to navigate"}</div>
+        <SoundPlayerBGM />
       </div>
     )
   }
