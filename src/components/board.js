@@ -4,7 +4,8 @@ const Board = ({ children, width, height }) => {
   return (
     <div
       className="game-board"
-      style={{ width: width + 'px', height: height + 'px' }}>
+      onTouchStart={(e) => console.log(e.nativeEvent)}
+      style={{ width: width + 'px', height: height + 'px' }} >
       {children}
     </div>
   )

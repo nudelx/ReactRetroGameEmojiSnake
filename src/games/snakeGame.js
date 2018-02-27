@@ -9,6 +9,7 @@ import SoundPlayer from "../components/soundPlayer"
 import withSFX from "../HOC/playerWithSFX"
 import withBGM from "../HOC/playerWithBGM"
 import SoundBGMControl from "../components/bgmControl"
+import { mobileAndTabletcheck } from '../tools/mobileCheck'
 
 const SoundPlayerSFX = withSFX(SoundPlayer)
 const SoundPlayerBGM = withBGM(SoundPlayer)
@@ -25,10 +26,15 @@ class SnakeGame extends Component {
     gameFail: false,
     playSound: false,
     score: 0,
-    playBGM: true
+    playBGM: false,
+    // isMobile: mobileAndTabletcheck()
   }
   componentWillMount() {
     this.setBackgroudDimensions()
+  }
+
+  componentDidMount () {
+    this.setState({ isMobile: mobileAndTabletcheck() })
   }
 
   setBackgroudDimensions() {
@@ -100,6 +106,7 @@ class SnakeGame extends Component {
   }
 
   render() {
+
     const { gameRunning, gameFail, score, playBGM } = this.state
     return (
       <div>
@@ -114,7 +121,7 @@ class SnakeGame extends Component {
             )}
           </Board>
         )}
-        <div className="tuts">{"Use: J,K,L,I to navigate"}</div>
+        <div className="tuts">{"Use: J,K,L,I to navigate "}</div>
         {playBGM && <SoundPlayerBGM />}
         {
           <SoundBGMControl
