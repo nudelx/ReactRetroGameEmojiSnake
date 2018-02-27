@@ -96,6 +96,10 @@ class Snake extends Component {
     )
   }
 
+  calcSteptouch = () => {
+
+  }
+
   runHeadChange() {
     const { headIconChangeSpeed } = this.state
     setInterval(
