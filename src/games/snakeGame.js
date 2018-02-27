@@ -34,12 +34,15 @@ class SnakeGame extends Component {
   }
 
   componentDidMount () {
-    this.setState({ isMobile: mobileAndTabletcheck() })
+    const isMobile = mobileAndTabletcheck()
+    this.setState({ isMobile })
+    this.setBackgroudDimensions(isMobile)
+
   }
 
-  setBackgroudDimensions() {
+  setBackgroudDimensions(isMobile) {
     const w = window.outerWidth * 0.95
-    const h = window.outerHeight * 0.7
+    const h = isMobile ? window.outerHeight * 0.85 : window.outerHeight * 0.7
     this.setState(
       {
         width: w - w % this.state.step,
@@ -107,7 +110,7 @@ class SnakeGame extends Component {
 
   render() {
 
-    const { gameRunning, gameFail, score, playBGM } = this.state
+    const { gameRunning, gameFail, score, playBGM, isMobile } = this.state
     return (
       <div>
         {gameRunning && !gameFail ? (
@@ -121,7 +124,7 @@ class SnakeGame extends Component {
             )}
           </Board>
         )}
-        <div className="tuts">{"Use: J,K,L,I to navigate "}</div>
+        {!isMobile && <div className="tuts">{"Use: J,K,L,I to navigate "}</div>}
         {playBGM && <SoundPlayerBGM />}
         {
           <SoundBGMControl
