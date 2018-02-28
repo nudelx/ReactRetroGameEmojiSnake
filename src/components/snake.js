@@ -11,7 +11,7 @@ class Snake extends Component {
     numOfChildren: 0,
     path: [],
     pressCode: null,
-    speed: 300,
+    speed: 250,
     scoreValue: 5,
     headIconChangeSpeed: 300,
     timer: null,
