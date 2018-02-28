@@ -11,15 +11,15 @@ class Snake extends Component {
     numOfChildren: 0,
     path: [],
     pressCode: null,
-    speed: 500,
+    speed: 300,
     scoreValue: 5,
     headIconChangeSpeed: 300,
     timer: null,
     calcStep: {
-      KeyI: { axis: "y", sign: -1 },
-      KeyJ: { axis: "x", sign: -1 },
-      KeyL: { axis: "x", sign: 1 },
-      KeyK: { axis: "y", sign: 1 }
+      ArrowUp: { axis: "y", sign: -1 },
+      ArrowLeft: { axis: "x", sign: -1 },
+      ArrowRight: { axis: "x", sign: 1 },
+      ArrowDown: { axis: "y", sign: 1 }
     }
   }
 
@@ -33,7 +33,7 @@ class Snake extends Component {
   }
 
   updateSpeed() {
-    if (this.state.numOfChildren % 5 === 0 && this.state.speed > 100) {
+    if (this.state.numOfChildren % 5 === 0 && this.state.speed > 50) {
       this.setState({ speed: this.state.speed * 0.9 }, () =>
         this.activateAutoRun()
       )
@@ -70,10 +70,11 @@ class Snake extends Component {
   }
 
   updatePosition = e => {
-    const { calcStep, path, numOfChildren, timer } = this.state
+    const { calcStep, path, numOfChildren, timer, pressCode } = this.state
     const { step, foodY, foodX, toggleFood, setScore, setPlaySound } = this.props
     if (!calcStep[e.code]) return
     const { [e.code]: { axis, sign } } = calcStep
+    if (pressCode && calcStep[pressCode].axis === axis &&  sign !== calcStep[pressCode].sign) return
     const { [axis]: axisValue } = this.state
     path.push({ x: this.state.x, y: this.state.y })
     this.setState(
@@ -109,7 +110,7 @@ class Snake extends Component {
 
   componentDidMount() {
     const body = document.querySelector("body")
-    body.addEventListener("keypress", this.updatePosition)
+    body.addEventListener("keydown", this.updatePosition)
     this.runHeadChange()
   }
 
