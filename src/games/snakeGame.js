@@ -114,7 +114,6 @@ class SnakeGame extends Component {
             )}
           </Board>
         )}
-        <div className="tuts">{"Use: J,K,L,I to navigate"}</div>
         {playBGM && <SoundPlayerBGM />}
         {
           <SoundBGMControl
