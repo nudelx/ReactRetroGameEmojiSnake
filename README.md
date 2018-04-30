@@ -4,7 +4,7 @@
 [![game](https://img.shields.io/badge/react-game-blue.svg)]()
 [![game](https://img.shields.io/badge/fun-coding-orange.svg)]()
 
-### No flash, no canvas, pure HTML + CSS + JavaScritp React Lib
+### No flash, no canvas, pure HTML + CSS + JavaScript React Lib
 
 #### Play the classic retro game! Guide the emoji snake towards the food but avoid your ever-growing tail 😀
 

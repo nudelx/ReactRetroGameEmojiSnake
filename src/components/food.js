@@ -1,10 +1,10 @@
 import React from 'react'
-import { ICONS } from '../const/snakeIcons'
+import { TOTAL_FOOD, EmojiFood } from '../const/snakeIcons'
 
 const Food = ({ foodX, foodY }) => {
   return (
     <div className="food" style={{ top: foodY, left: foodX }}>
-      {ICONS[(foodX + foodY) % ICONS.length]}
+      {<EmojiFood foodId={((foodX + foodY) % TOTAL_FOOD)} /> } 
     </div>
   )
 }
