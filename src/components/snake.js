@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { snakeHead, snakeBody } from "../const/snakeIcons"
+import { TOTAL_HEADS } from "../const/snakeIcons"
 import SnakeHead from "./snakeHead"
 import SnakeBody from "./snakeBody"
 
@@ -102,7 +102,7 @@ class Snake extends Component {
     setInterval(
       () =>
         this.setState({
-          snakeHeadindex: (this.state.snakeHeadindex + 1) % snakeHead.length
+          snakeHeadindex: (this.state.snakeHeadindex + 1) % TOTAL_HEADS
         }),
       headIconChangeSpeed
     )
@@ -120,9 +120,7 @@ class Snake extends Component {
       <div className="snake">
         <SnakeHead x={x} y={y} snakeHeadindex={snakeHeadindex} />
         {this.state.path.map((item, index) => (
-          <SnakeBody {...item} key={`${item.y}_${item.x}_${index}`}>
-            {snakeBody}
-          </SnakeBody>
+          <SnakeBody {...item} key={`${item.y}_${item.x}_${index}`} />
         ))}
       </div>
     )
