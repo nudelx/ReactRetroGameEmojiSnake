@@ -1,8 +1,8 @@
-import React from "react"
+import React from 'react'
 
 const SoundBGMControl = ({ playBGM, togglePlayBGM }) => (
   <div className="sound-bgm-control" onClick={togglePlayBGM}>
-    {playBGM ? "🔈" : "🔇"}
+    {playBGM ? '🔈' : '🔇'}
   </div>
 )
 

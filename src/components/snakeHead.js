@@ -1,5 +1,5 @@
-import React from "react"
-import { EmojiSmileHead } from "../const/snakeIcons"
+import React from 'react'
+import { EmojiSmileHead } from '../const/snakeIcons'
 
 const SnakeHead = ({ y, x, snakeHeadindex }) => {
   return (

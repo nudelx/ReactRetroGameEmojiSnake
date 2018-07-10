@@ -1,14 +1,14 @@
-import React, { Component } from "react"
-import Board from "../components/board"
-import Snake from "../components/snake"
-import Food from "../components/food"
-import StartButton from "../components/startButton"
-import ScoreDisplay from "../components/scoreDisplay"
-import GameOver from "../components/gameOver"
-import SoundPlayer from "../components/soundPlayer"
-import withSFX from "../HOC/playerWithSFX"
-import withBGM from "../HOC/playerWithBGM"
-import SoundBGMControl from "../components/bgmControl"
+import React, { Component } from 'react'
+import Board from '../components/board'
+import Snake from '../components/snake'
+import Food from '../components/food'
+import StartButton from '../components/startButton'
+import ScoreDisplay from '../components/scoreDisplay'
+import GameOver from '../components/gameOver'
+import SoundPlayer from '../components/soundPlayer'
+import withSFX from '../HOC/playerWithSFX'
+import withBGM from '../HOC/playerWithBGM'
+import SoundBGMControl from '../components/bgmControl'
 
 const SoundPlayerSFX = withSFX(SoundPlayer)
 const SoundPlayerBGM = withBGM(SoundPlayer)
@@ -36,8 +36,8 @@ class SnakeGame extends Component {
     const h = window.outerHeight * 0.7
     this.setState(
       {
-        width: w - w % this.state.step,
-        height: h - h % this.state.step
+        width: w - (w % this.state.step),
+        height: h - (h % this.state.step)
       },
       () => this.calcFoodPosition()
     )
@@ -73,8 +73,8 @@ class SnakeGame extends Component {
   calcFoodPosition() {
     let foodX = this.randomPosition(this.state.width, 0)
     let foodY = this.randomPosition(this.state.height, 0)
-    foodX = foodX - foodX % this.state.step
-    foodY = foodY - foodY % this.state.step
+    foodX = foodX - (foodX % this.state.step)
+    foodY = foodY - (foodY % this.state.step)
     this.setState({ foodX, foodY, foodVisible: true })
   }
 

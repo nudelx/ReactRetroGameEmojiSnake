@@ -1,8 +1,8 @@
-import React from "react"
+import React from 'react'
 
 const ScoreDisplay = ({ score }) => {
   return (
-    <div className={"score-display"}>
+    <div className={'score-display'}>
       <div>{` Score: ${score}`}</div>
     </div>
   )
