@@ -1,46 +1,111 @@
-import React, { Component } from 'react'
-import Board from '../components/board'
-import Snake from '../components/snake'
-import Food from '../components/food'
-import StartButton from '../components/startButton'
-import ScoreDisplay from '../components/scoreDisplay'
-import GameOver from '../components/gameOver'
-import SoundPlayer from '../components/soundPlayer'
-import withSFX from '../HOC/playerWithSFX'
-import withBGM from '../HOC/playerWithBGM'
-import SoundBGMControl from '../components/bgmControl'
+import React, { Component } from "react"
+import Board from "../components/board"
+import Snake from "../components/snake"
+import Food from "../components/food"
+import StartButton from "../components/startButton"
+import ScoreDisplay from "../components/scoreDisplay"
+import GameOver from "../components/gameOver"
+import SoundPlayer from "../components/soundPlayer"
+import withSFX from "../HOC/playerWithSFX"
+import withBGM from "../HOC/playerWithBGM"
+import SoundBGMControl from "../components/bgmControl"
 
 const SoundPlayerSFX = withSFX(SoundPlayer)
 const SoundPlayerBGM = withBGM(SoundPlayer)
 
-class SnakeGame extends Component {
-  state = {
-    width: 0,
-    height: 0,
-    step: 32,
-    foodX: 0,
-    foodY: 0,
-    foodVisible: false,
-    gameRunning: false,
-    gameFail: false,
-    playSound: false,
-    score: 0,
-    playBGM: true
+const hooksComposer = (hooks) => {
+  function cFL(str) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
-  componentWillMount() {
-    this.setBackgroudDimensions()
-  }
+  return Object.keys(hooks).reduce((all, key) => {
+    const t = React.useState(hooks[key])
+    all[key] = t[0]
+    all[`set${cFL(key)}`]
+    return all
+  }, {})
+}
+
+
+
+const useSnakeGameState = () => {
+
+    const [width, setWidth] = React.useState(0)
+    const [height, setHeight] = React.useState( 0)
+    const [step, setStep] = React.useState( 32)
+    const [foodX, setSetFoodX] = React.useState( 0)
+    const [foodY, setFoodY] = React.useState( 0)
+    const [foodVisible, setFoodVisible] = React.useState(false)
+    const [gameRunning, setGameRunning] = React.useState(false)
+    const [gameFail, setSetGameFail] = React.useState(false)
+    const [playSound, setPlaySound] = React.useState(false)
+    const [score, setScore] = React.useState( 0)
+    const [playBGM, setPlayBGM] = React.useState(true)
+
+    const randomPosition = (max, min) => {
+      return Math.floor(Math.random() * max) + min
+    }
+
+    const calcFoodPosition = () => {
+      let foodX = randomPosition(width, 0)
+      let foodY = randomPosition(height, 0)
+      foodX = foodX - (foodX % step)
+      foodY = foodY - (foodY % step)
+      setSetFoodX(foodX)
+      setFoodY(foodY)
+      setFoodVisible(true)
+    }
+    
+
+
+    // cdm
+    React.useEffect(() => {
+        const w = window.outerWidth * 0.95
+        const h = window.outerHeight * 0.7
+
+        setWidth(w - (w % step))
+        setHeight(h - (h % step))
+        calcFoodPosition()
+      },[]) 
+  
+      const toggleFood = () => {
+      foodVisible(!foodVisible)
+      !foodVisible && this.calcFoodPosition()
+    }
+     
+
+    return  {
+
+    }
+}
+
+const SnakeGame = () =>  {
+
+    
+  // state = {
+  //   width: 0,
+  //   height: 0,
+  //   step: 32,
+  //   foodX: 0,
+  //   foodY: 0,
+  //   foodVisible: false,
+  //   gameRunning: false,
+  //   gameFail: false,
+  //   playSound: false,
+  //   score: 0,
+  //   playBGM: true
+  // }
+  
+  
+
+  
+  // componentDidMount() {
+  //   this.setBackgroudDimensions()
+  // }
 
   setBackgroudDimensions() {
-    const w = window.outerWidth * 0.95
-    const h = window.outerHeight * 0.7
-    this.setState(
-      {
-        width: w - (w % this.state.step),
-        height: h - (h % this.state.step)
-      },
-      () => this.calcFoodPosition()
-    )
+    
+    this.calcFoodPosition()
+       
   }
 
   toggleFood = () =>
