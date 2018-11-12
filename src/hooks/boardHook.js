@@ -26,7 +26,7 @@ export const useBorardHook = () => {
     setFoodVisible(!foodVisible)
     foodVisible && calcFoodPosition()
   }
-
+  // cdm
   React.useEffect(() => {
     const w = window.outerWidth * 0.95
     const h = window.outerHeight * 0.7

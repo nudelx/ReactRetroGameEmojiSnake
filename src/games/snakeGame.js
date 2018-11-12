@@ -6,7 +6,7 @@ import SoundPlayer from "../components/soundPlayer"
 import withBGM from "../HOC/playerWithBGM"
 import SoundBGMControl from "../components/bgmControl"
 import GameRun from "../components/GameRun"
-import { useGameState } from "../hooks/gameState"
+import { useGameHook } from "../hooks/gameHook"
 import { useBorardHook } from "../hooks/boardHook"
 import Loading from "../components/loading"
 
@@ -25,7 +25,7 @@ const SnakeGame = () => {
     startTheGame,
     closePlayer,
     togglePlayBGM
-  } = useGameState()
+  } = useGameHook()
   const {
     width,
     height,
@@ -51,10 +51,12 @@ const SnakeGame = () => {
     playSound
   }
 
+  const runGame = gameRunning && !gameFail
+
   return (
     <div>
       <Board width={width} height={height} fallback={Loading}>
-        {gameRunning && !gameFail ? (
+        {runGame ? (
           <GameRun {...gameRunProps} />
         ) : gameFail ? (
           <GameOver score={score} onClick={startTheGame} />
