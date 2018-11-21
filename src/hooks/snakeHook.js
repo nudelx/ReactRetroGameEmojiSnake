@@ -13,12 +13,15 @@ export const useSnakeHook = () => {
   const [headIconChangeSpeed, setHeadIconChangeSpeed] = React.useState(300)
   const [timer, setTimer] = React.useState(null)
 
-  React.useEffect(function() {
-    const timer = setInterval(function() {
-      setSnakeHeadindex((snakeHeadindex + 1) % TOTAL_HEADS)
-    }, headIconChangeSpeed)
-    return () => clearInterval(timer)
-  })
+  React.useEffect(
+    function() {
+      const timer = setInterval(function() {
+        setSnakeHeadindex((snakeHeadindex + 1) % TOTAL_HEADS)
+      }, headIconChangeSpeed)
+      return () => clearInterval(timer)
+    },
+    [snakeHeadindex]
+  )
 
   return {
     x,

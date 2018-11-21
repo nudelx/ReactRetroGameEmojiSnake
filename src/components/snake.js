@@ -1,59 +1,52 @@
-import React, { Component } from "react"
-import { TOTAL_HEADS } from "../const/snakeIcons"
+import React from "react"
 import SnakeHead from "./snakeHead"
 import SnakeBody from "./snakeBody"
+import { useSnakeHook } from "../hooks/snakeHook"
+const calcStep = {
+  ArrowUp: { axis: "y", sign: -1 },
+  ArrowLeft: { axis: "x", sign: -1 },
+  ArrowRight: { axis: "x", sign: 1 },
+  ArrowDown: { axis: "y", sign: 1 }
+}
 
-class Snake extends Component {
-  state = {
-    x: 32,
-    y: 32,
-    snakeHeadindex: 0,
-    numOfChildren: 0,
-    path: [],
-    pressCode: null,
-    speed: 250,
-    scoreValue: 5,
-    headIconChangeSpeed: 300,
-    timer: null,
-    calcStep: {
-      ArrowUp: { axis: "y", sign: -1 },
-      ArrowLeft: { axis: "x", sign: -1 },
-      ArrowRight: { axis: "x", sign: 1 },
-      ArrowDown: { axis: "y", sign: 1 }
+const Snake = props => {
+  const {
+    x,
+    y,
+    snakeHeadindex,
+    numOfChildren,
+    path,
+    pressCode,
+    speed,
+    scoreValue,
+    timer,
+    setTimer,
+    setSpeed,
+    setNumOfChildren,
+    setX,
+    setY,
+    setPath,
+    setPressCode
+  } = useSnakeHook()
+
+  const updateSpeed = () => {
+    if (numOfChildren % 5 === 0 && speed > 50) {
+      setSpeed(speed * 0.9)
     }
   }
 
-  activateAutoRun() {
-    clearInterval(this.state.timer)
-    const timer = setInterval(
-      () => this.updatePosition({ code: this.state.pressCode }),
-      this.state.speed
-    )
-    this.setState({ timer })
-  }
-
-  updateSpeed() {
-    if (this.state.numOfChildren % 5 === 0 && this.state.speed > 50) {
-      this.setState({ speed: this.state.speed * 0.9 }, () =>
-        this.activateAutoRun()
-      )
-    }
-  }
-
-  checkForFail() {
-    const { path, x, y } = this.state
+  const checkForFail = () => {
     // need to improve performance here
-    path.filter(item => item.x === x && item.y === y).length &&
-      this.stopTheGame()
+    path.filter(item => item.x === x && item.y === y).length && stopTheGame()
   }
 
-  stopTheGame() {
-    clearInterval(this.state.timer)
-    this.props.toggleGameFail()
+  const stopTheGame = () => {
+    clearInterval(timer)
+    props.toggleGameFail()
   }
 
-  magicMove(axis, axisValue) {
-    const { height, width, step } = this.props
+  const magicMove = (axis, axisValue) => {
+    const { height, width, step } = props
     if (axis === "y") {
       return axisValue < 0
         ? height - step
@@ -69,20 +62,12 @@ class Snake extends Component {
     }
   }
 
-  addChild() {
-    this.setState({ numOfChildren: this.state.numOfChildren + 1 })
+  const addChild = () => {
+    setNumOfChildren(numOfChildren + 1)
   }
 
-  updatePosition = e => {
-    const { calcStep, path, numOfChildren, timer, pressCode } = this.state
-    const {
-      step,
-      foodY,
-      foodX,
-      toggleFood,
-      setScore,
-      setPlaySound
-    } = this.props
+  const updatePosition = e => {
+    const { step } = props
     if (!calcStep[e.code]) return
     const {
       [e.code]: { axis, sign }
@@ -93,56 +78,49 @@ class Snake extends Component {
       sign !== calcStep[pressCode].sign
     )
       return
-    const { [axis]: axisValue } = this.state
-    path.push({ x: this.state.x, y: this.state.y })
-    this.setState(
-      {
-        [axis]: this.magicMove(axis, axisValue + step * sign),
-        path: numOfChildren === 0 ? [] : path.slice(-numOfChildren),
-        pressCode: e.code
-      },
-      () => {
-        if (foodY === this.state.y && foodX === this.state.x) {
-          toggleFood()
-          setScore(this.state.scoreValue)
-          this.addChild()
-          this.updateSpeed()
-          setPlaySound(true)
-        }
-        timer === null && this.activateAutoRun()
-        this.checkForFail()
+    // const { [axis]: axisValue } = this.state
+    const axisValue = axis === "x" ? x : y
+
+    path.push({ x, y })
+    const update = magicMove(axis, axisValue + step * sign)
+    axis === "x" ? setX(update) : setY(update)
+    setPath(numOfChildren === 0 ? [] : path.slice(-numOfChildren))
+    setPressCode(e.code)
+  }
+
+  React.useEffect(
+    () => {
+      const { foodY, foodX, toggleFood, setScore, setPlaySound } = props
+      const timetRun = setInterval(function() {
+        updatePosition({ code: pressCode })
+      }, speed)
+
+      if (foodY === y && foodX === x) {
+        toggleFood()
+        setScore(scoreValue)
+        addChild()
+        updateSpeed()
+        setPlaySound(true)
       }
-    )
-  }
+      checkForFail()
+      return () => clearInterval(timetRun)
+    },
+    [pressCode, speed, path, y, x]
+  )
 
-  runHeadChange() {
-    const { headIconChangeSpeed } = this.state
-    setInterval(
-      () =>
-        this.setState({
-          snakeHeadindex: (this.state.snakeHeadindex + 1) % TOTAL_HEADS
-        }),
-      headIconChangeSpeed
-    )
-  }
-
-  componentDidMount() {
+  React.useEffect(() => {
     const body = document.querySelector("body")
-    body.addEventListener("keydown", this.updatePosition)
-    this.runHeadChange()
-  }
+    body.addEventListener("keydown", e => setPressCode(e.code))
+  }, [])
 
-  render() {
-    const { x, y, snakeHeadindex } = this.state
-    return (
-      <div className="snake">
-        <SnakeHead x={x} y={y} snakeHeadindex={snakeHeadindex} />
-        {this.state.path.map((item, index) => (
-          <SnakeBody {...item} key={`${item.y}_${item.x}_${index}`} />
-        ))}
-      </div>
-    )
-  }
+  return (
+    <div className="snake">
+      <SnakeHead x={x} y={y} snakeHeadindex={snakeHeadindex} />
+      {path.map((item, index) => (
+        <SnakeBody {...item} key={`${item.y}_${item.x}_${index}`} />
+      ))}
+    </div>
+  )
 }
 
 export default Snake
