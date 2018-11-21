@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { TOTAL_HEADS } from '../const/snakeIcons'
-import SnakeHead from './snakeHead'
-import SnakeBody from './snakeBody'
+import React, { Component } from "react"
+import { TOTAL_HEADS } from "../const/snakeIcons"
+import SnakeHead from "./snakeHead"
+import SnakeBody from "./snakeBody"
 
 class Snake extends Component {
   state = {
@@ -16,10 +16,10 @@ class Snake extends Component {
     headIconChangeSpeed: 300,
     timer: null,
     calcStep: {
-      ArrowUp: { axis: 'y', sign: -1 },
-      ArrowLeft: { axis: 'x', sign: -1 },
-      ArrowRight: { axis: 'x', sign: 1 },
-      ArrowDown: { axis: 'y', sign: 1 }
+      ArrowUp: { axis: "y", sign: -1 },
+      ArrowLeft: { axis: "x", sign: -1 },
+      ArrowRight: { axis: "x", sign: 1 },
+      ArrowDown: { axis: "y", sign: 1 }
     }
   }
 
@@ -54,18 +54,18 @@ class Snake extends Component {
 
   magicMove(axis, axisValue) {
     const { height, width, step } = this.props
-    if (axis === 'y') {
+    if (axis === "y") {
       return axisValue < 0
         ? height - step
         : axisValue + step > height
-          ? 0
-          : axisValue
+        ? 0
+        : axisValue
     } else {
       return axisValue < 0
         ? width - step
         : axisValue + step > width
-          ? 0
-          : axisValue
+        ? 0
+        : axisValue
     }
   }
 
@@ -127,8 +127,8 @@ class Snake extends Component {
   }
 
   componentDidMount() {
-    const body = document.querySelector('body')
-    body.addEventListener('keydown', this.updatePosition)
+    const body = document.querySelector("body")
+    body.addEventListener("keydown", this.updatePosition)
     this.runHeadChange()
   }
 

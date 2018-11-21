@@ -1,12 +1,13 @@
 import React from "react"
 
-const Board = ({ children, width, height }) => {
+const Board = ({ children, width, height, fallback }) => {
+  const isReady = !!width + height
   return (
     <div
-      className="game-board"
+      className={isReady ? "game-board" : ""}
       style={{ width: width + "px", height: height + "px" }}
     >
-      {children}
+      {isReady ? children : fallback()}
     </div>
   )
 }
