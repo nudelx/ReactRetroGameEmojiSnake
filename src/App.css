@@ -180,3 +180,12 @@ html {
   outline: none;
   user-select: none;
 }
+
+.loading {
+  position: absolute;
+  width: 100%;
+  height: 400px;
+  font-size: 32px;
+  color: #fff;
+  margin-top: 20%;
+}

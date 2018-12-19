@@ -1,7 +1,6 @@
-import React from "react"
+import React from 'react'
 
-
-const SoundPlayer = ({ closePlayer, sound, autoPlay, loop}) => {
+const SoundPlayer = ({ closePlayer, sound, autoPlay, loop }) => {
   return (
     <div>
       <audio onEnded={closePlayer} autoPlay={autoPlay} loop={loop}>

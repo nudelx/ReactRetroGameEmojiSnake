@@ -57,11 +57,15 @@ class Snake extends Component {
     if (axis === "y") {
       return axisValue < 0
         ? height - step
-        : axisValue + step > height ? 0 : axisValue
+        : axisValue + step > height
+        ? 0
+        : axisValue
     } else {
       return axisValue < 0
         ? width - step
-        : axisValue + step > width ? 0 : axisValue
+        : axisValue + step > width
+        ? 0
+        : axisValue
     }
   }
 
@@ -71,10 +75,24 @@ class Snake extends Component {
 
   updatePosition = e => {
     const { calcStep, path, numOfChildren, timer, pressCode } = this.state
-    const { step, foodY, foodX, toggleFood, setScore, setPlaySound } = this.props
+    const {
+      step,
+      foodY,
+      foodX,
+      toggleFood,
+      setScore,
+      setPlaySound
+    } = this.props
     if (!calcStep[e.code]) return
-    const { [e.code]: { axis, sign } } = calcStep
-    if (pressCode && calcStep[pressCode].axis === axis &&  sign !== calcStep[pressCode].sign) return
+    const {
+      [e.code]: { axis, sign }
+    } = calcStep
+    if (
+      pressCode &&
+      calcStep[pressCode].axis === axis &&
+      sign !== calcStep[pressCode].sign
+    )
+      return
     const { [axis]: axisValue } = this.state
     path.push({ x: this.state.x, y: this.state.y })
     this.setState(

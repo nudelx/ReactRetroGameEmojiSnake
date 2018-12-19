@@ -4,7 +4,7 @@ import { TOTAL_FOOD, EmojiFood } from '../const/snakeIcons'
 const Food = ({ foodX, foodY }) => {
   return (
     <div className="food" style={{ top: foodY, left: foodX }}>
-      {<EmojiFood foodId={((foodX + foodY) % TOTAL_FOOD)} /> } 
+      {<EmojiFood foodId={(foodX + foodY) % TOTAL_FOOD} />}
     </div>
   )
 }
