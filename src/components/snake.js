@@ -117,7 +117,7 @@ class Snake extends Component {
 
   runHeadChange() {
     const { headIconChangeSpeed } = this.state
-    setInterval(
+    this.interval = setInterval(
       () =>
         this.setState({
           snakeHeadindex: (this.state.snakeHeadindex + 1) % TOTAL_HEADS
@@ -130,6 +130,10 @@ class Snake extends Component {
     const body = document.querySelector("body")
     body.addEventListener("keydown", this.updatePosition)
     this.runHeadChange()
+  }
+
+  componentWillMount() {
+    clearInterval(this.interval)
   }
 
   render() {

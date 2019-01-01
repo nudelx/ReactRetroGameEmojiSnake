@@ -1,6 +1,6 @@
 import React from "react"
 
-export const useBorardHook = () => {
+export const useBoardHook = () => {
   const [step, setStep] = React.useState(32)
   const [width, setWidth] = React.useState(0)
   const [height, setHeight] = React.useState(0)

@@ -4,6 +4,8 @@ import "./App.css"
 import "./emoji.css"
 // import ReactHeader from './components/recatHeader'
 import SnakeGame from "./games/snakeGame"
+// import { EmojiSmileHead, makeFood } from "./const/snakeIcons"
+
 // window.parent &&
 //   window.parent.postMessage('gameLoaded', 'https://wix-incubator.github.io')
 
@@ -14,6 +16,9 @@ class App extends Component {
         {/* <ReactHeader /> */}
         <SnakeGame />
         {/* and more games here  */}
+        {/* {makeFood().map(item => (
+          <EmojiSmileHead key={item} snakeHeadindex={item} />
+        ))} */}
       </div>
     )
   }

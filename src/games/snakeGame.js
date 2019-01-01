@@ -7,7 +7,7 @@ import withBGM from "../HOC/playerWithBGM"
 import SoundBGMControl from "../components/bgmControl"
 import GameRun from "../components/GameRun"
 import { useGameHook } from "../hooks/gameHook"
-import { useBorardHook } from "../hooks/boardHook"
+import { useBoardHook } from "../hooks/boardHook"
 import Loading from "../components/loading"
 
 const SoundPlayerBGM = withBGM(SoundPlayer)
@@ -34,7 +34,7 @@ const SnakeGame = () => {
     foodVisible,
     toggleFood,
     step
-  } = useBorardHook()
+  } = useBoardHook()
   const gameRunProps = {
     width,
     height,
