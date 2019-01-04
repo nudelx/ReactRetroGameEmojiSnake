@@ -1,25 +1,23 @@
-import React, { Component } from "react"
-import { TOTAL_HEADS } from "../const/snakeIcons"
-import SnakeHead from "./snakeHead"
-import SnakeBody from "./snakeBody"
+import React, { Component } from 'react'
+import { TOTAL_HEADS } from '../const/snakeIcons'
+import SnakeHead from './snakeHead'
+import SnakeBody from './snakeBody'
 
 class Snake extends Component {
   state = {
     x: 32,
     y: 32,
-    snakeHeadindex: 0,
     numOfChildren: 0,
     path: [],
     pressCode: null,
     speed: 250,
     scoreValue: 5,
-    headIconChangeSpeed: 300,
     timer: null,
     calcStep: {
-      ArrowUp: { axis: "y", sign: -1 },
-      ArrowLeft: { axis: "x", sign: -1 },
-      ArrowRight: { axis: "x", sign: 1 },
-      ArrowDown: { axis: "y", sign: 1 }
+      ArrowUp: { axis: 'y', sign: -1 },
+      ArrowLeft: { axis: 'x', sign: -1 },
+      ArrowRight: { axis: 'x', sign: 1 },
+      ArrowDown: { axis: 'y', sign: 1 }
     }
   }
 
@@ -54,7 +52,7 @@ class Snake extends Component {
 
   magicMove(axis, axisValue) {
     const { height, width, step } = this.props
-    if (axis === "y") {
+    if (axis === 'y') {
       return axisValue < 0
         ? height - step
         : axisValue + step > height
@@ -115,21 +113,9 @@ class Snake extends Component {
     )
   }
 
-  runHeadChange() {
-    const { headIconChangeSpeed } = this.state
-    this.interval = setInterval(
-      () =>
-        this.setState({
-          snakeHeadindex: (this.state.snakeHeadindex + 1) % TOTAL_HEADS
-        }),
-      headIconChangeSpeed
-    )
-  }
-
   componentDidMount() {
-    const body = document.querySelector("body")
-    body.addEventListener("keydown", this.updatePosition)
-    this.runHeadChange()
+    const body = document.querySelector('body')
+    body.addEventListener('keydown', this.updatePosition)
   }
 
   componentWillMount() {
@@ -137,10 +123,10 @@ class Snake extends Component {
   }
 
   render() {
-    const { x, y, snakeHeadindex } = this.state
+    const { x, y } = this.state
     return (
       <div className="snake">
-        <SnakeHead x={x} y={y} snakeHeadindex={snakeHeadindex} />
+        <SnakeHead x={x} y={y} />
         {this.state.path.map((item, index) => (
           <SnakeBody {...item} key={`${item.y}_${item.x}_${index}`} />
         ))}
